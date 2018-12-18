@@ -47,4 +47,4 @@ So, the TDD approach we are going to follow is very simple.
 * vendor/bin/phpunit --filter unauthorized_user_cannot_delete_the_task
 
 9/ Run Full Test Suite
-vendor/bin/phpunit
+* vendor/bin/phpunit
