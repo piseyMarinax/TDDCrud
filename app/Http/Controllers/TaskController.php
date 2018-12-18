@@ -76,7 +76,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit',compact('task'));
     }
 
     /**
@@ -88,7 +88,15 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        $this->authorize('update', $task);
+
+        $task->update($request->all());
+        return redirect('/tasks/'.$task->id);
     }
 
     /**

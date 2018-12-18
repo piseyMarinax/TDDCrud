@@ -14,6 +14,13 @@
                         {{$task->description}}
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-footer">
+                        @can('update', $task)
+                            <a href="/tasks/{{$task->id}}/edit" class="btn btn-warning">Edit Task</a>
+                        @endcan
+                    </div>
+                </div>
             </div>
         </div>
     </div>
