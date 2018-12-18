@@ -6,8 +6,45 @@ CRUD The CRUD cycle describes the elemental functions of a persistent database. 
 
 So, the TDD approach we are going to follow is very simple.
 
-1/ Think of the feature we are going to implement
-2/ Write Feature/unit test required to test the feature
-3/ Run the test, keep writing code to take the test from green to red
-4/ Once test passes, optimize and refactor the code
-5/ Keep running the test in refactor process to verify you are not breaking the functionality
+    -  Think of the feature we are going to implement
+    -  Write Feature/unit test required to test the feature
+    -  Run the test, keep writing code to take the test from green to red
+    -  Once test passes, optimize and refactor the code
+    -  Keep running the test in refactor process to verify you are not breaking the functionality
+
+
+1/ Setup Model and Migrations
+* php artisan make:auth
+* php artisan make:model Task -mr
+* php artisan migrate
+
+2/ Generate Model Factory
+* php artisan make:factory TaskFactory --model=Task
+* php artisan tinker
+* factory('App\Task',20)->create();
+
+3/ Getting Started with Test Driven Development
+
+4/ A user can read all the tasks [READ]
+* vendor/bin/phpunit --filter a_user_can_read_all_the_tasks
+* 
+5/ A user can read a single task [READ]
+* vendor/bin/phpunit --filter a_user_can_read_single_task
+
+6/ An authenticated user can create new task [CREATE]
+* vendor/bin/phpunit --filter authenticated_users_can_create_a_new_task
+* vendor/bin/phpunit --filter unauthenticated_users_cannot_create_a_new_task
+* vendor/bin/phpunit --filter a_task_requires_a_title
+* vendor/bin/phpunit --filter a_task_requires_a_description
+
+7/ Authorized user can update the task [UPDATE]
+* vendor/bin/phpunit --filter authorized_user_can_update_the_task
+* vendor/bin/phpunit --filter unauthorized_user_cannot_update_the_task
+* php artisan make:policy TaskPolicy --model=Task
+
+8/ Authorized user can delete the task [DELETE]
+* vendor/bin/phpunit --filter authorized_user_can_delete_the_task
+* vendor/bin/phpunit --filter unauthorized_user_cannot_delete_the_task
+
+9/ Run Full Test Suite
+vendor/bin/phpunit
