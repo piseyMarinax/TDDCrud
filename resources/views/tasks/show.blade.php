@@ -14,13 +14,22 @@
                         {{$task->description}}
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-footer">
-                        @can('update', $task)
-                            <a href="/tasks/{{$task->id}}/edit" class="btn btn-warning">Edit Task</a>
-                        @endcan
+                @can('update', $task)
+                    <div class="card">
+                        <div class="card-footer">
+
+                                <a href="/tasks/{{$task->id}}/edit" class="btn btn-warning">Edit Task</a>
+
+                                <form style="float:right" method="POST" action="/tasks/{{$task->id}}">
+                                    {{csrf_field()}}
+                                    {{method_field('DELETE')}}
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </form>
+
+                        </div>
                     </div>
-                </div>
+                @endcan
+
             </div>
         </div>
     </div>

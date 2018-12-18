@@ -59,10 +59,7 @@ class TasksTest extends TestCase
         //When unauthenticated user submits post request to create task endpoint
         // He should be redirected to login page
         $response = $this->post('/tasks',$task->toArray());
-        $response->assertStatus(419);
-
-//        $response->assertRedirect('/login');
-//            ->assertRedirect('/login');
+        $response->assertRedirect('/login');
     }
 
     /** @test */
@@ -111,6 +108,32 @@ class TasksTest extends TestCase
         $task->title = "Updated Title";
         //When the user hit's the endpoint to update the task
         $response = $this->put('/tasks/'.$task->id, $task->toArray());
+        //We should expect a 403 error
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_user_can_delete_the_task(){
+
+        //Given we have a signed in user
+        $this->actingAs(factory('App\User')->create());
+        //And a task which is created by the user
+        $task = factory('App\Task')->create(['user_id' => Auth::id()]);
+        //When the user hit's the endpoint to update the task
+        $this->delete('/tasks/'.$task->id, $task->toArray());
+        //The task should be updated in the database.
+        $this->assertDatabaseMissing('tasks',['id'=> $task->id]);
+
+    }
+
+    /** @test */
+    public function unauthorized_user_cannot_delete_the_task(){
+        //Given we have a signed in user
+        $this->actingAs(factory('App\User')->create());
+        //And a task which is not created by the user
+        $task = factory('App\Task')->create();
+        //When the user hit's the endpoint to update the task
+        $response = $this->delete('/tasks/'.$task->id, $task->toArray());
         //We should expect a 403 error
         $response->assertStatus(403);
     }
