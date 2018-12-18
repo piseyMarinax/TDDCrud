@@ -24,9 +24,9 @@ So, the TDD approach we are going to follow is very simple.
 * factory('App\Task',20)->create();
 
 3/ Getting Started with Test Driven Development
-* * IN phpunit
-* <env name="DB_CONNECTION" value="sqlite"/>
-* <env name="DB_DATABASE" value=":memory:"/>
+* IN phpunit
+ -  <env name="DB_CONNECTION" value="sqlite"/>
+ -  <env name="DB_DATABASE" value=":memory:"/>
 
 4/ A user can read all the tasks [READ]
 * vendor/bin/phpunit --filter a_user_can_read_all_the_tasks
